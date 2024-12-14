@@ -13,13 +13,12 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup | undefined;
 
   constructor(
-    private service: JwtService,
+    public service: JwtService,
     private fb: FormBuilder,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    const isUserLoggedIn = false;
     this.loginForm = this.fb.group({
       email: ['', Validators.required, Validators.email],
       password: ['', Validators.required],

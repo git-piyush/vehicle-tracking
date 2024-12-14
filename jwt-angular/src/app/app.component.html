@@ -7,7 +7,10 @@
         <a class="nav-link" *ngIf="!jwtService.session" routerLink="/register">Register</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="!jwtService.session" routerLink="/login">Login</a>
+        <a class="nav-link" *ngIf="!jwtService.session" (click)="onLogin()">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="jwtService.session" (click)="showProfile()">{{ jwtService.session.username }}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" *ngIf="jwtService.session" (click)="onLogout()">Logout</a>

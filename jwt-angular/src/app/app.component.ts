@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtService } from './service/jwt.service';
 import { LoginComponent } from './components/login/login.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 export class AppComponent implements OnInit{
   title = 'Vehicle Tracking System';
   isUserLoggedIn = false;
-  constructor(public jwtService: JwtService) { }
+  constructor(public jwtService: JwtService, private router: Router) { }
   ngOnInit(): void {
     const jwtToken = localStorage.getItem("jwtToken");
     const user = localStorage.getItem("user");
@@ -18,8 +19,19 @@ export class AppComponent implements OnInit{
       this.isUserLoggedIn = true;
     }
   }
+
+  onLogin(){
+    this.jwtService.msg1 = null;
+    //this.jwtService.loginForm();
+    this.router.navigateByUrl("/login");
+  }
+
   onLogout(){
     this.jwtService.logout();
+  }
+
+  showProfile(){
+      this.router.navigateByUrl("/profile");  
   }
 
 }

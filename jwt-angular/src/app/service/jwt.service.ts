@@ -10,6 +10,7 @@ const BASE_URL = ["http://localhost:8080/"]
 })
 export class JwtService {
   session: any = null;
+  msg1:any = null;
   constructor(private http: HttpClient, private router: Router) { }
 
   register(signRequest: any): Observable<any> {
@@ -18,7 +19,8 @@ export class JwtService {
 
   login(loginRequest: any) {
     this.http.post(BASE_URL + 'login', loginRequest).subscribe((res:any)=>{
-      if(res.jwt!=null){
+      this.msg1 = res.message;
+      if(res.jwt!=null){         
           const jwtToken = res.jwt;
           const user = res.user;
           localStorage.setItem('jwt', jwtToken);
@@ -27,7 +29,6 @@ export class JwtService {
           this.router.navigateByUrl("/dashboard");
       }
     })
-    
   }
 
   hello(): Observable<any> {
@@ -56,6 +57,10 @@ export class JwtService {
     localStorage.removeItem("jwt");
     localStorage.removeItem("user");
     this.router.navigateByUrl("/login");
+  }
+
+  loginForm(){
+    this.msg1 = null;
   }
 
 }

@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { UserprofileComponent } from './components/userprofile/userprofile.component';
+import { UpdateprofileComponent } from './components/updateprofile/updateprofile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    UserprofileComponent,
+    UpdateprofileComponent
   ],
   imports: [
     BrowserModule,

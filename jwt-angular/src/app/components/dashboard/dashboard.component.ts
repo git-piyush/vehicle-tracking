@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtService } from 'src/app/service/jwt.service';
 
 @Component({
@@ -9,18 +10,24 @@ import { JwtService } from 'src/app/service/jwt.service';
 export class DashboardComponent {
   message: string;
   constructor(
-    private service: JwtService
+    private jwtService: JwtService, private router: Router
   ) { }
 
   ngOnInit() {
-    const isUserLoggedIn = false;
     this.hello();
   }
 
   hello() {
-    this.service.hello().subscribe(
+    this.jwtService.hello().subscribe(
       (response) => {
         console.log(response);
+        const jwtToken = localStorage.getItem('jwt');
+        const user = localStorage.getItem('user');
+        if(jwtToken==null){
+          this.router.navigateByUrl("/login");
+        }else{
+          this.jwtService.session = {username:user};
+        }
         this.message = response.message;
       }
     )
