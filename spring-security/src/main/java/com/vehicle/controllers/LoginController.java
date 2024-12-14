@@ -39,18 +39,21 @@ public class LoginController {
 
     @PostMapping
     public LoginResponse login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) throws IOException {
-        try {
+        String message = null;
+    	try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Incorrect email or password.");
+        	message = "Incorrect email or password.";
+        	return new LoginResponse(null, null,message);
+            //throw new BadCredentialsException("Incorrect email or password.");
         } catch (DisabledException disabledException) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Customer is not activated");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User is not activated.");
             return null;
         }
         final UserDetails userDetails = userService.loadUserByUsername(loginRequest.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
-        return new LoginResponse(jwt, userDetails.getUsername());
+        return new LoginResponse(jwt, userDetails.getUsername(),message);
     }
 
 }
