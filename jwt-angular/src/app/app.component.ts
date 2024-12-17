@@ -11,10 +11,12 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit{
   title = 'Vehicle Tracking System';
   isUserLoggedIn = false;
+  loggedinUser = null;
   constructor(public jwtService: JwtService, private router: Router) { }
   ngOnInit(): void {
     const jwtToken = localStorage.getItem("jwtToken");
     const user = localStorage.getItem("user");
+    this.loggedinUser = user;
     if(jwtToken !=null && user !=null){
       this.isUserLoggedIn = true;
     }
@@ -30,7 +32,7 @@ export class AppComponent implements OnInit{
     this.jwtService.logout();
   }
 
-  showProfile(){
+  showProfile(email: any){
       this.router.navigateByUrl("/profile");  
   }
 

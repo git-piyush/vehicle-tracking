@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
       dob:['',[Validators.required]],
+      phone:[null,[]]
     }, { validator: this.passwordMathValidator })
   }
 

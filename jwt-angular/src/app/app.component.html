@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="#">Vehicle Tracking System</a>
+    <a class="navbar-brand" href="#" routerLink="/dashboard">Vehicle Tracking System</a>
 
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
@@ -10,7 +10,7 @@
         <a class="nav-link" *ngIf="!jwtService.session" (click)="onLogin()">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="jwtService.session" (click)="showProfile()">{{ jwtService.session.username }}</a>
+        <a class="nav-link" *ngIf="jwtService.session" (click)="showProfile(loggedinUser)">{{ jwtService.session.username }}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" *ngIf="jwtService.session" (click)="onLogout()">Logout</a>

@@ -19,12 +19,12 @@ export class JwtService {
 
   login(loginRequest: any) {
     this.http.post(BASE_URL + 'login', loginRequest).subscribe((res:any)=>{
-      this.msg1 = res.message;
       if(res.jwt!=null){         
           const jwtToken = res.jwt;
           const user = res.user;
-          localStorage.setItem('jwt', jwtToken);
-          localStorage.setItem('user', user);
+          localStorage.setItem('jwt', res.jwt);
+          localStorage.setItem('user', res.user);
+          localStorage.setItem('userId', res.userId);
           this.session = {username:user};
           this.router.navigateByUrl("/dashboard");
       }
@@ -39,10 +39,7 @@ export class JwtService {
 
   private createAuhtorizationHeader() {
     const jwtToken = localStorage.getItem('jwt');
-    const user = localStorage.getItem('user');
     if (jwtToken) {
-      console.log("JWT token found in local storage", jwtToken);
-      console.log("user found in local storage", user);
       return new HttpHeaders().set(
         "Authorization", "Bearer " + jwtToken
       )
@@ -56,11 +53,18 @@ export class JwtService {
     this.session = null;
     localStorage.removeItem("jwt");
     localStorage.removeItem("user");
+    localStorage.removeItem("useId");
     this.router.navigateByUrl("/login");
   }
 
   loginForm(){
     this.msg1 = null;
+  }
+
+  getUserProfileById(): Observable<any>{
+    return this.http.get<[]>(BASE_URL+`api/user/profile/${localStorage.getItem('userId')}`,{
+      headers: this.createAuhtorizationHeader()
+    })
   }
 
 }
