@@ -8,10 +8,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -44,10 +47,30 @@ public class UserAddress {
     private String createdBy;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "address")
-    private UserInfo user;
-    
-    @PreUpdate
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private UserInfo userInfo;
+   
+    public UserAddress() {
+	}
+
+	public UserAddress(String city, String state, String country, Long pin, String addType, Date modifiedDate,
+			String modifiedBy, Date createdDate, String createdBy, UserInfo userInfo) {
+		super();
+		this.city = city;
+		this.state = state;
+		this.country = country;
+		this.pin = pin;
+		this.addType = addType;
+		this.modifiedDate = modifiedDate;
+		this.modifiedBy = modifiedBy;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.userInfo = userInfo;
+	}
+
+
+	@PreUpdate
     @PrePersist
     public void updateTimeStamps()
     {
@@ -145,12 +168,14 @@ public class UserAddress {
 		this.createdBy = createdBy;
 	}
 
-	public UserInfo getUser() {
-		return user;
+	public UserInfo getUserInfo() {
+		return userInfo;
 	}
 
-	public void setUser(UserInfo user) {
-		this.user = user;
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
+
+	
 	
 }

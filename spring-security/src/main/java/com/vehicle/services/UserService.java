@@ -9,4 +9,6 @@ public interface UserService {
 
 	public UserInfo findById(Long userId);
 	
+	public UserInfo findByEmail(String email);
+	
 }

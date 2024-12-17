@@ -23,4 +23,13 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@Override
+	public UserInfo findByEmail(String email) {
+		Optional<UserInfo> user = userInfoRepository.findByEmail(email);
+		if(user.isPresent()) {
+			return user.get();
+		}
+		return null;
+	}
+
 }

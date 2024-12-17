@@ -33,9 +33,9 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
         return security.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/signup", "/login","/swagger-ui/**","/v3/api-docs/**").permitAll()
+                .requestMatchers("/signup", "/login","/swagger-ui/**","/v3/api-docs/**","/api/**").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/api/**")
+                .authorizeHttpRequests().requestMatchers("")
                 .authenticated()
                 .and()
                 .sessionManagement()

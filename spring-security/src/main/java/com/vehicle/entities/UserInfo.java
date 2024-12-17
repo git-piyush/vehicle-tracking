@@ -7,7 +7,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,6 +31,7 @@ public class UserInfo {
     
     private String password;
 
+    @Column(name="email",unique = true)
     private String email;
     
     private String userType;
@@ -36,6 +39,10 @@ public class UserInfo {
     private String active;
     
     private Date dob;
+    
+    private String countryCode;
+    
+    private String phone;
     
     private Date modifiedDate;
 
@@ -45,8 +52,7 @@ public class UserInfo {
 
     private String createdBy;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "userInfo",fetch = FetchType.EAGER)
     private UserAddress address;
 
     @PreUpdate
@@ -158,4 +164,30 @@ public class UserInfo {
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
+
+	public UserAddress getAddress() {
+		return address;
+	}
+
+	public void setAddress(UserAddress address) {
+		this.address = address;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+   
 }

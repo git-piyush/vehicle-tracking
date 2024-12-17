@@ -9,4 +9,6 @@ public interface UserAddressService {
 
 	public boolean saveUserAddress(UserAddress userAddress);
 	
+	public UserAddress findAddressById(Long id);
+	
 }

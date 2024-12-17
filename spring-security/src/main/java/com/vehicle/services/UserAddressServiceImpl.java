@@ -15,7 +15,23 @@ public class UserAddressServiceImpl implements UserAddressService {
 	@Override
 	public boolean saveUserAddress(UserAddress userAddress) {
 		
-		return false;
+		if(userAddress==null) {
+			return false;
+		}
+		try {
+			UserAddress address = userAddressRepository.save(userAddress);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public UserAddress findAddressById(Long id) {
+		
+		UserAddress address = userAddressRepository.findById(id).get();
+		
+		return address;
 	}
 
 }

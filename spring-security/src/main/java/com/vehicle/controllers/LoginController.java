@@ -2,6 +2,8 @@ package com.vehicle.controllers;
 
 import com.vehicle.dto.LoginRequest;
 import com.vehicle.dto.LoginResponse;
+import com.vehicle.entities.UserInfo;
+import com.vehicle.services.UserService;
 import com.vehicle.services.jwt.UserInfoServiceImpl;
 import com.vehicle.utils.JwtUtil;
 
@@ -28,6 +30,9 @@ public class LoginController {
     private final UserInfoServiceImpl userService;
 
     private final JwtUtil jwtUtil;
+    
+    @Autowired
+    private UserService userService2;
 
 
     @Autowired
@@ -44,7 +49,7 @@ public class LoginController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         } catch (BadCredentialsException e) {
         	message = "Incorrect email or password.";
-        	return new LoginResponse(null, null,message);
+        	return new LoginResponse(null, null, null, message);
             //throw new BadCredentialsException("Incorrect email or password.");
         } catch (DisabledException disabledException) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "User is not activated.");
@@ -52,8 +57,8 @@ public class LoginController {
         }
         final UserDetails userDetails = userService.loadUserByUsername(loginRequest.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
-
-        return new LoginResponse(jwt, userDetails.getUsername(),message);
+        UserInfo userInfo = userService2.findByEmail(userDetails.getUsername());
+        return new LoginResponse(jwt, userDetails.getUsername(), userInfo.getId() ,message);
     }
 
 }

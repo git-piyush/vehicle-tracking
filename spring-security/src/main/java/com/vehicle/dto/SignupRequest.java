@@ -24,6 +24,10 @@ public class SignupRequest {
     
     private Date dob;
     
+    private String countryCode;
+    
+    private String phone;
+    
     @JsonIgnore
     private Date modifiedDate;
 
@@ -106,5 +110,21 @@ public class SignupRequest {
 
 	public void setDob(Date dob) {
 		this.dob = dob;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }

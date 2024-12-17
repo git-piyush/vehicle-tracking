@@ -22,7 +22,6 @@ public class UserAddressRequest {
     private String country;
 
 	@NotNull(message = "Country is a mandatory input.")
-	@Size(min = 6, max = 6, message = "Add a vaild Pin code")
     private Long pin;
 
     private String addType;
